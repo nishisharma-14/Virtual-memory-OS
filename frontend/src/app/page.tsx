@@ -91,14 +91,14 @@ export default function Dashboard() {
     const activeFrames = currentStep ? currentStep.frames_state : Array(config.frames).fill(null);
 
     return (
-        <main className="min-h-screen bg-gray-950 text-white p-6 md:p-12 font-sans selection:bg-indigo-500/30">
+        <main className="min-h-screen bg-white dark:bg-black text-black dark:text-white p-6 md:p-12 font-sans selection:bg-black/10 dark:selection:bg-white/10">
 
             <div className="max-w-7xl mx-auto flex flex-col gap-8">
-                <header className="flex flex-col gap-2">
-                    <h1 className="text-4xl md:text-5xl font-black tracking-tight bg-gradient-to-br from-indigo-300 via-white to-purple-300 bg-clip-text text-transparent">
+                <header className="flex flex-col gap-2 border-b border-black/10 dark:border-white/10 pb-6 mb-2">
+                    <h1 className="text-4xl md:text-5xl font-black tracking-tight">
                         Virtual Memory OS
                     </h1>
-                    <p className="text-gray-400 text-lg max-w-2xl leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl leading-relaxed">
                         Interactive visualization of operating system memory management, page faults, and replacement algorithms.
                     </p>
                 </header>
@@ -107,23 +107,23 @@ export default function Dashboard() {
                     <div className="flex flex-col gap-4 w-full lg:w-auto">
                         <InputPanel config={config} setConfig={setConfig} />
 
-                        <div className="bg-gray-800/50 backdrop-blur-md border border-gray-700 p-6 rounded-2xl shadow-2xl flex flex-col gap-4">
+                        <div className="bg-white dark:bg-black border border-black dark:border-white p-6 rounded-none flex flex-col gap-4">
                             {!simulationState.hasStarted ? (
                                 <button
                                     onClick={runSimulation}
-                                    className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
+                                    className="w-full bg-black dark:bg-white text-white dark:text-black font-bold py-3 px-4 rounded-none transition-colors hover:opacity-80 flex items-center justify-center gap-2"
                                 >
                                     <Play size={18} /> Generate Simulation
                                 </button>
                             ) : (
                                 <div className="grid grid-cols-3 gap-2">
-                                    <button onClick={togglePlay} className="bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-400 border border-indigo-500/30 rounded-xl py-3 flex items-center justify-center transition-colors">
+                                    <button onClick={togglePlay} className="bg-transparent text-black dark:text-white border border-black dark:border-white rounded-none py-3 flex items-center justify-center transition-colors hover:bg-black/5 dark:hover:bg-white/5">
                                         {simulationState.isPlaying ? <Pause size={20} /> : <Play size={20} />}
                                     </button>
-                                    <button onClick={nextStep} disabled={simulationState.currentStepIndex >= simulationState.steps.length - 1} className="bg-gray-700 hover:bg-gray-600 text-white rounded-xl py-3 flex items-center justify-center transition-colors disabled:opacity-50">
+                                    <button onClick={nextStep} disabled={simulationState.currentStepIndex >= simulationState.steps.length - 1} className="bg-black dark:bg-white text-white dark:text-black rounded-none py-3 flex items-center justify-center transition-opacity hover:opacity-80 disabled:opacity-30 disabled:hover:opacity-30">
                                         <FastForward size={20} />
                                     </button>
-                                    <button onClick={reset} className="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 rounded-xl py-3 flex items-center justify-center transition-colors">
+                                    <button onClick={reset} className="bg-transparent text-black dark:text-white border border-black dark:border-white rounded-none py-3 flex items-center justify-center transition-colors hover:bg-black/5 dark:hover:bg-white/5">
                                         <RotateCcw size={20} />
                                     </button>
                                 </div>
@@ -131,13 +131,13 @@ export default function Dashboard() {
                         </div>
 
                         {simulationState.hasStarted && currentStep && (
-                            <div className="bg-indigo-950/30 border border-indigo-500/20 p-4 rounded-xl">
-                                <p className="text-sm font-bold text-indigo-300 uppercase tracking-widest mb-1">Incoming Request</p>
-                                <p className="text-3xl font-black text-white">Page {currentStep.page}</p>
+                            <div className="bg-gray-100 dark:bg-gray-900 border border-black/10 dark:border-white/10 p-4 rounded-none">
+                                <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-1">Incoming Request</p>
+                                <p className="text-3xl font-black">Page {currentStep.page}</p>
                                 {currentStep.is_fault ? (
-                                    <p className="text-rose-400 text-sm mt-1 font-medium">Not found in memory. Triggering fault handler.</p>
+                                    <p className="text-black dark:text-white text-sm mt-1 font-medium bg-gray-200 dark:bg-gray-800 inline-block px-2 py-1 rounded-sm">Not found in memory. Triggering fault handler.</p>
                                 ) : (
-                                    <p className="text-emerald-400 text-sm mt-1 font-medium">Page hit! Already in physical memory.</p>
+                                    <p className="text-black dark:text-white text-sm mt-1 font-medium bg-gray-200 dark:bg-gray-800 inline-block px-2 py-1 rounded-sm">Page hit! Already in physical memory.</p>
                                 )}
                             </div>
                         )}
@@ -147,7 +147,7 @@ export default function Dashboard() {
                         )}
                     </div>
 
-                    <div className="flex-1 w-full bg-gray-900/50 rounded-3xl p-8 border border-gray-800/50 shadow-inner overflow-hidden min-h-[600px]">
+                    <div className="flex-1 w-full bg-white dark:bg-black rounded-none p-8 border border-black/20 dark:border-white/20 overflow-hidden min-h-[600px]">
                         {simulationState.hasStarted ? (
                             <div className="flex flex-col gap-8">
                                 <MemoryGrid
@@ -163,8 +163,8 @@ export default function Dashboard() {
                                 />
                             </div>
                         ) : (
-                            <div className="h-full w-full flex flex-col items-center justify-center text-gray-500 gap-4 opacity-50">
-                                <RotateCcw size={48} className="animate-spin-slow" />
+                            <div className="h-full w-full flex flex-col items-center justify-center text-gray-400 dark:text-gray-600 gap-4">
+                                <RotateCcw size={48} className="animate-spin-slow opacity-50" />
                                 <p className="text-xl font-medium tracking-wide">Configure memory and generate simulation to begin</p>
                             </div>
                         )}

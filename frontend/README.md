@@ -1,8 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Virtual Memory OS Simulation - Frontend
+
+This is the frontend component for the Virtual Memory OS simulation, built with [Next.js](https://nextjs.org/) and styled with [Tailwind CSS](https://tailwindcss.com/). It provides an interactive, minimal visualization of operating system memory management, page faults, and replacement algorithms.
+
+## Features
+
+- **Interactive Configuration:** Set memory size, page size, total frames, reference strings, and replacement algorithms (FIFO, LRU, Optimal).
+- **Step-by-Step Execution:** Watch the simulation handle memory requests one page at a time with playback controls.
+- **Physical Memory Grid:** Visualizes which pages are loaded in RAM and clearly indicates page hit/fault events.
+- **Storage Queue:** Displays the upcoming reference string pages waiting in secondary storage.
+- **Algorithm Analytics:** Compare the performance (page faults vs page hits) of different algorithms side-by-side using real-time bar charts.
+- **Minimal Aesthetic:** Clean, high-contrast monochrome design that prioritizes data visualization over UI noise.
 
 ## Getting Started
 
-First, run the development server:
+First, ensure you have Node.js installed on your machine.
+
+1. Install the dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+2. Run the development server:
 
 ```bash
 npm run dev
@@ -10,27 +33,18 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Dependency Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project uses:
+- React & Next.js for the core framework.
+- Framer Motion for smooth layout animations (e.g., pages swapping in and out of frames).
+- Recharts for algorithm comparison analytics.
+- Tailwind CSS for the minimalist styling.
 
-## Learn More
+## Backend Connection
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Make sure the backend simulation engine is running on `http://localhost:8000`. The frontend communicates via POST requests to `/api/simulate` to generate the step-by-step logic. See the backend `README.md` for instructions on starting the Python server.

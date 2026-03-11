@@ -3,10 +3,17 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light dark;
 }
 
 body {
-  background-color: #020617; /* Slate 950 */
-  color: #f8fafc; /* Slate 50 */
+  background-color: #ffffff; /* pure white */
+  color: #000000; /* pure black */
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #000000; /* pure black */
+    color: #ffffff; /* pure white */
+  }
 }
