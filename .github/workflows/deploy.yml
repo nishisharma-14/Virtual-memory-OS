@@ -1,10 +1,9 @@
-name: Deploy React to GitHub Pages
+name: Deploy Next.js to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: ["main"]
   schedule:
-    # Runs every day at 00:00 UTC for fresh data
     - cron: '0 0 * * *'
   workflow_dispatch:
 
@@ -17,9 +16,6 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,20 +27,30 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24"
+          cache: npm
+          cache-dependency-path: './frontend/package-lock.json'
           
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        
+        with:
+          static_site_generator: next
+          
+      - name: Restore Next.js cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            frontend/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('frontend/package-lock.json') }}-${{ hashFiles('frontend/src/**') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('frontend/package-lock.json') }}-
+            
       - name: Install dependencies
-        working-directory: ./frontend
         run: npm ci
-        
-      - name: Build with Next
         working-directory: ./frontend
+        
+      - name: Build with Next.js
         run: npm run build
-        env:
-          NEXT_PUBLIC_GITHUB_TOKEN: ${{ secrets.NEXT_PUBLIC_GITHUB_TOKEN }}
-          NEXT_PUBLIC_BUILD_TIME: ${{ github.event.head_commit.timestamp }}
+        working-directory: ./frontend
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
