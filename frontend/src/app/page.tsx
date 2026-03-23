@@ -32,7 +32,7 @@ export default function Dashboard() {
 
     const runSimulation = async () => {
         try {
-            const res = await fetch("http://localhost:8000/api/simulate", {
+            const res = await fetch("https://virtual-memory-backend.onrender.com/api/simulate", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(config)
